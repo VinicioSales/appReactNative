@@ -8,7 +8,7 @@ const App = () => {
 
   const handleRequest = () => {
     data = {
-        'texto': 'Amanda'
+        'texto': inputValue
     }
     axios.post(`http://192.168.0.13:3000/enviar`, data)
       .then(res => setResponse(res.data.mensagem))
