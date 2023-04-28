@@ -10,6 +10,7 @@ const App = () => {
     data = {
         'texto': inputValue
     }
+    //REVIEW - Alterar IP local
     axios.post(`http://192.168.0.13:3000/enviar`, data)
       .then(res => setResponse(res.data.mensagem))
       .catch(err => console.error(err));
