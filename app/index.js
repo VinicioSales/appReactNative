@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const App = () => {
   const [response, setResponse] = useState('');
   const [inputValue, setInputValue] = useState('');
+  const [displayText, setDisplayText] = useState('');
 
   const handleRequest = () => {
       datas = {
@@ -18,6 +19,7 @@ const App = () => {
     
   }
 
+  //NOTE - storeData
   const storeData = async () => {
     const json = {
       valor: inputValue
@@ -25,7 +27,7 @@ const App = () => {
     try {      
       const jsonValue = JSON.stringify(json)
       await AsyncStorage.setItem('key', jsonValue)
-      console.log('Valor salvo com sucesso!');
+      console.log('Valor salvo com sucesso!', jsonValue);
     } catch(e) {
       console.log('Erro ao salvar o valor:', e);
     }
@@ -33,7 +35,6 @@ const App = () => {
     console.log('Done.')
   }
 
-  
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('key')
@@ -41,6 +42,7 @@ const App = () => {
       if (jsonValue !== null) {
         const parsedValue = JSON.parse(jsonValue);
         console.log('Conteúdo do jsonValue:', parsedValue);
+        setDisplayText(jsonValue)
         return parsedValue;
       } else {
         return null;
@@ -52,7 +54,7 @@ const App = () => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Response: {response}</Text>
+      <Text>displayText: {displayText}</Text>
       <TextInput
         style={{ borderWidth: 1, width: 200, marginVertical: 10, padding: 5 }}
         placeholder="Enter a value"
