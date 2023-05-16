@@ -1,19 +1,53 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const App = () => {
   const [response, setResponse] = useState('');
   const [inputValue, setInputValue] = useState('');
 
   const handleRequest = () => {
-    data = {
+      datas = {
         'texto': inputValue
     }
     //REVIEW - Alterar IP local
-    axios.post(`http://192.168.0.13:3000/enviar`, data)
+    axios.post(`http://192.168.15.132:3000/enviar`, datas)
       .then(res => setResponse(res.data.mensagem))
       .catch(err => console.error(err));
+    
+  }
+
+  const storeData = async () => {
+    const json = {
+      valor: inputValue
+    }
+    try {      
+      const jsonValue = JSON.stringify(json)
+      await AsyncStorage.setItem('key', jsonValue)
+      console.log('Valor salvo com sucesso!');
+    } catch(e) {
+      console.log('Erro ao salvar o valor:', e);
+    }
+  
+    console.log('Done.')
+  }
+
+  
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('key')
+      console.log('Valor pego com sucesso!');
+      if (jsonValue !== null) {
+        const parsedValue = JSON.parse(jsonValue);
+        console.log('Conteúdo do jsonValue:', parsedValue);
+        return parsedValue;
+      } else {
+        return null;
+      }
+    } catch(e) {
+      console.log('Erro ao salvar o valor:', e);
+    }
   }
 
   return (
@@ -27,7 +61,13 @@ const App = () => {
       />
       <TouchableOpacity
         style={{ backgroundColor: 'blue', padding: 10, borderRadius: 5 }}
-        onPress={handleRequest}
+        onPress={storeData}
+      >
+        <Text style={{ color: 'white' }}>Send Request</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{ backgroundColor: 'blue', padding: 10, borderRadius: 5 }}
+        onPress={getData}
       >
         <Text style={{ color: 'white' }}>Send Request</Text>
       </TouchableOpacity>
