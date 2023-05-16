@@ -11,7 +11,7 @@ const App = () => {
         'texto': inputValue
     }
     //REVIEW - Alterar IP local
-    axios.post(`http://192.168.0.13:3000/enviar`, data)
+    axios.post(`http://167.172.110.38:3000/enviar`, data)
       .then(res => setResponse(res.data.mensagem))
       .catch(err => console.error(err));
   }

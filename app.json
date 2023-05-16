@@ -5,6 +5,14 @@
       "bundler": "metro"
     },
     "name": "appReactNative",
-    "slug": "appReactNative"
+    "slug": "appReactNative",
+    "extra": {
+      "eas": {
+        "projectId": "e38fbc89-f5ab-4e13-9fe3-f105cd90d790"
+      }
+    },
+    "android": {
+      "package": "com.viniciosales.appReactNative"
+    }
   }
 }
