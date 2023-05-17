@@ -1,20 +1,14 @@
-import React, { useState } from 'react';
+import { useState, React } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import axios from 'axios';
+import { postData } from './config/funcs/modules';
+import { verificarStorage } from './config/funcs/modules';
 
 const App = () => {
   const [response, setResponse] = useState('');
   const [inputValue, setInputValue] = useState('');
+  const [displayText, setDisplayText] = useState('');
 
-  const handleRequest = () => {
-    data = {
-        'texto': inputValue
-    }
-    //REVIEW - Alterar IP local
-    axios.post(`http://167.172.110.38:3000/enviar`, data)
-      .then(res => setResponse(res.data.mensagem))
-      .catch(err => console.error(err));
-  }
+  verificarStorage(setDisplayText)
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -27,7 +21,7 @@ const App = () => {
       />
       <TouchableOpacity
         style={{ backgroundColor: 'blue', padding: 10, borderRadius: 5 }}
-        onPress={handleRequest}
+        onPress={() => postData(inputValue)}
       >
         <Text style={{ color: 'white' }}>Send Request</Text>
       </TouchableOpacity>
