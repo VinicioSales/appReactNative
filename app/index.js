@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import { useState, React } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { postData } from './config/funcs/modules';
-import { getData } from './config/funcs/modules';
 import { verificarStorage } from './config/funcs/modules';
 
 const App = () => {
@@ -9,7 +8,7 @@ const App = () => {
   const [inputValue, setInputValue] = useState('');
   const [displayText, setDisplayText] = useState('');
 
-  verificarStorage()
+  verificarStorage(setDisplayText)
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

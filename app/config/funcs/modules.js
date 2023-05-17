@@ -12,12 +12,27 @@ export const postData = (inputValue) => {
         .then(res => {
                 setResponse(res.status)
             }).catch(err => {
-                    storeData()
+                    storeData(inputValue)
+                });
+}
+
+//NOTE - postDataOnly
+export const postDataOnly = (inputValue) => {
+    datas = {
+    'texto': inputValue
+    }
+    //REVIEW - Alterar IP local
+    axios.post(`http://167.172.110.38:3000/enviar`, datas)
+        .then(res => {
+                setResponse(res.status)
+                console.log(`postDataOnly: ${res.status}`)
+            }).catch(e => {
+                    console.log(`Erro postDataOnly: ${e}`)
                 });
 }
 
 //NOTE - storeData
-export const storeData = async () => {
+const storeData = async (inputValue) => {
     const json = {
         valor: inputValue
     }
@@ -26,14 +41,12 @@ export const storeData = async () => {
         await AsyncStorage.setItem('key', jsonValue)
         console.log('Valor salvo com sucesso!', jsonValue);
     } catch(e) {
-        console.log('Erro ao salvar o valor:', e);
+        console.log('Erro storeData:', e);
     }
-
-    console.log('Done.')
     }
 
 //NOTE - getData
-export const getData = async () => {
+const getData = async () => {
     try {
         const jsonValue = await AsyncStorage.getItem('key123')
         console.log('Valor pego com sucesso!');
@@ -46,27 +59,26 @@ export const getData = async () => {
         return null;
         }
     } catch(e) {
-        console.log('Erro ao salvar o valor:', e);
+        console.log('Erro getData:', e);
     }
 }
 
 //NOTE - verificarStorage
-export const verificarStorage = async () => {
+export const verificarStorage = async (setDisplayText) => {
     try {
-        const jsonValue = await AsyncStorage.getItem('key321456')
+        const jsonValue = await AsyncStorage.getItem('key')
         if (jsonValue !== null) {
-            console.log('Item do Storage pego com sucesso!');
+            console.log('Item do Storage pego com sucesso! 1');
             const parsedValue = JSON.parse(jsonValue);
             console.log('Conteúdo do jsonValue:', parsedValue);
-            setDisplayText(jsonValue)
-            postData();
-            console.log('Item do Storage enviado com sucesso!')
+            //setDisplayText(jsonValue)
+            postDataOnly();
             return parsedValue;
         } else {
             return null;
         }
     } catch(e) {
-        console.log('Erro ao salvar o valor:', e);
+        console.log('Erro verificarStorage:', e);
 
     }
 }
