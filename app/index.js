@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { postData } from './config/funcs/api';
+import { postData } from './config/funcs/modules';
 import { getData } from './config/funcs/modules';
 import { verificarStorage } from './config/funcs/modules';
 
